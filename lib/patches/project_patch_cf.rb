@@ -27,7 +27,7 @@ module  Patches
           end
         end
       end
-      output.compact.join("/")
+      "[#{output.compact.join('/')}] name"
     end
   end
 

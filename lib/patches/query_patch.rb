@@ -39,7 +39,7 @@ module InstanceMethods
            end
          end
        end
-      values << ["#{prefix}[#{output.compact.join("/")}]#{p.name}", p.id.to_s]
+      values << ["#{prefix}#{p}", p.id.to_s]
     end
     @all_projects_values = values
   end
