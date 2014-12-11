@@ -6,17 +6,7 @@
     html>body #sortable li { height: 1.5em; line-height: 1.2em; }
 </style>
 
-<% if @settings.present?
-   cfs_sorted = get_sorted_cf(@settings)
-    else
-      cfs_sorted = CustomField.where(type: "ProjectCustomField")
-     cfs_sorted.each do |cfs|
-       @settings = Hash.new
-       @settings[cfs.name.to_sym] = false
-       @settings[:sortable_position] = ""
-       end
-     end
-%>
+<%  cfs_sorted = get_sorted_cf(@settings) %>
 <script>
     $(function() {
         $( "#sortable" ).sortable({

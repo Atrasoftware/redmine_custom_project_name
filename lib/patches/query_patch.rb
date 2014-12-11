@@ -31,8 +31,7 @@ module InstanceMethods
     Project.project_tree_with_order(all_projects,order_desc) do |p, level|
       prefix = (level > 0 ? ('--' * level + ' ') : '')
       output = ["#{p.identifier}"]
-      #
-      get_sorted_cf(@settings).each do |cf|
+      get_sorted_cf(Setting.send "plugin_redmine_custom_project_name").each do |cf|
         p.visible_custom_field_values.select{|coll| coll.custom_field.name == cf.name }.each do |custom_value|
            unless custom_value.value.blank?
               output<< custom_value.value
