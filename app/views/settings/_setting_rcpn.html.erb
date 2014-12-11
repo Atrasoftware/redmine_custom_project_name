@@ -6,7 +6,7 @@
     html>body #sortable li { height: 1.5em; line-height: 1.2em; }
 </style>
 
-<%  cfs_sorted = get_sorted_cf(@settings) %>
+<%  cfs_sorted = ApplicationHelper.get_sorted_cf(@settings) %>
 <script>
     $(function() {
         $( "#sortable" ).sortable({

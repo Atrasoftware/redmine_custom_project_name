@@ -20,7 +20,7 @@ module  Patches
       settings = Setting.send "plugin_redmine_custom_project_name"
       output = ["#{identifier}"]
   if settings.present?
-    cfs= get_sorted_cf(settings)
+    cfs= ApplicationHelper.get_sorted_cf(settings)
     if cfs.present?
       cfs.select{|col| settings[col.name] }.each do |cf|
         visible_custom_field_values.select{|coll| coll.custom_field.name == cf.name }.each do |custom_value|
