@@ -5,7 +5,7 @@ api.array :projects, api_meta(:total_count => @project_count, :offset => @offset
       api.name        project
       api.identifier  project.identifier
       api.description project.description
-      api.parent(:id => project.parent.id, :name => project.parent.name) if project.parent && project.parent.visible?
+      api.parent(:id => project.parent.id, :name => project.parent) if project.parent && project.parent.visible?
       api.status      project.status
       api.is_public   project.is_public?
 
