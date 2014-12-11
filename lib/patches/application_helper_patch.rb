@@ -49,10 +49,10 @@ module  Patches
       end
     end
 
-# Generates a link to a project settings if active
+    # Generates a link to a project settings if active
     def link_to_project_settings_with_identifier(project, options={}, html_options=nil)
       if project.active?
-        link_to project.identifier, settings_project_path(project, options), html_options
+        link_to "[#{project.identifier}] #{project.name}" , settings_project_path(project, options), html_options
       elsif project.archived?
         h(project)
       else
