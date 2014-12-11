@@ -1,8 +1,10 @@
 Redmine::Plugin.register :redmine_custom_project_name do
   name 'Redmine Custom Project Name plugin'
-  author 'Author name'
+  author 'Bilel KEDIDI'
   description 'This is a plugin for Redmine'
   version '0.0.1'
-  url 'http://example.com/path/to/plugin'
-  author_url 'http://example.com/about'
+  url 'https://github.com/Atrasoftware/redmine_custom_project_name'
+end
+Rails.application.config.to_prepare do
+  Query.send(:include, Patches::QueryPatch)
 end
