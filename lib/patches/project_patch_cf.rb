@@ -31,7 +31,7 @@ module  Patches
       end
     end
   end
-      "[#{output.compact.join('/')}] name"
+      "[#{output.compact.join('/')}] #{project.name}"
     end
   end
 
