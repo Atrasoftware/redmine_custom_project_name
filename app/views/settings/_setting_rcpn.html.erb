@@ -1,0 +1,7 @@
+<h1>Customs fields to display</h1>
+    <% CustomField.where(type: "ProjectCustomField").each do |cf| %>
+        <p>
+          <%= cf.name %>
+          <%= check_box_tag("settings[#{cf.name}]", true, @settings[cf.name]) %>
+        </p>
+    <% end  %>
