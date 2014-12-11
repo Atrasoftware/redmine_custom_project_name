@@ -1,7 +1,40 @@
 <h1>Customs fields to display</h1>
-    <% CustomField.where(type: "ProjectCustomField").each do |cf| %>
-        <p>
-          <%= cf.name %>
-          <%= check_box_tag("settings[#{cf.name}]", true, @settings[cf.name]) %>
-        </p>
-    <% end  %>
+
+<style>
+    #sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+    #sortable li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; height: 1.5em; }
+    html>body #sortable li { height: 1.5em; line-height: 1.2em; }
+</style>
+
+<% if @settings.present?
+   cfs_sorted = get_sorted_cf(@settings)
+    else
+      cfs_sorted = CustomField.where(type: "ProjectCustomField")
+     cfs_sorted.each do |cfs|
+       @settings = Hash.new
+       @settings[cfs.name.to_sym] = false
+       @settings[:sortable_position] = ""
+       end
+     end
+%>
+<script>
+    $(function() {
+        $( "#sortable" ).sortable({
+            placeholder: "ui-state-highlight",
+            update: function (event, ui) {
+                var list =  $(this).sortable("toArray").join("|");
+               $("#sortable_position").children("input").val(list);
+            }
+        });
+        $( "#sortable" ).disableSelection();
+    });
+</script>
+<ul id="sortable">
+  <% cfs_sorted.each do |cf| %>
+      <li class="ui-state-default" id="<%= cf.id %>"> <%= check_box_tag("settings[#{cf.name}]", true, @settings[cf.name]) %> <%= cf.name %></li>
+  <% end  %>
+</ul>
+
+<div id="sortable_position">
+  <%= hidden_field_tag "settings[sortable_position]",@settings[:sortable_position] %>
+</div>

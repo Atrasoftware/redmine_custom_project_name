@@ -41,6 +41,25 @@ module  Patches
       end
     end
 
+    def get_sorted_cf(settings)
+      sorting_options = settings[:sortable_position]
+      cfs_sorted = Array.new
+        cfs = CustomField.where(type: "ProjectCustomField")
+        if sorting_options and sorting_options.present?
+          sorting_options= sorting_options.split('|')
+          sorting_options.each do |cf_id|
+            cf = cfs.select{|c| "#{c.id}" == "#{cf_id}" }
+            cfs_sorted<< cf
+            cfs = cfs.reject{|c| "#{c.id}" == "#{cf_id}" }
+          end
+        end
+        cfs.each do |cf|
+          cfs_sorted<< cf
+        end
+        cfs_sorted.flatten!
+      cfs_sorted
+    end
+
 
   end
 
