@@ -9,4 +9,6 @@ Redmine::Plugin.register :redmine_custom_project_name do
 end
 Rails.application.config.to_prepare do
   Query.send(:include, Patches::QueryPatch)
+  Project.send(:include, Patches::ProjectPatchCf)
+  ApplicationHelper.send(:include, Patches::ApplicationHelperPatch)
 end

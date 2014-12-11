@@ -30,7 +30,16 @@ module InstanceMethods
     end
     Project.project_tree_with_order(all_projects,order_desc) do |p, level|
       prefix = (level > 0 ? ('--' * level + ' ') : '')
-      values << ["#{prefix}[#{p.identifier}]#{p.name}", p.id.to_s]
+      output = ["#{p.identifier}"]
+      #
+       CustomField.where(:type=> "ProjectCustomField").order("name ASC").select{|col| @settings[col.name] }.each do |cf|
+        p.visible_custom_field_values.select{|coll| coll.custom_field.name == cf.name }.each do |custom_value|
+           unless custom_value.value.blank?
+              output<< custom_value.value
+           end
+         end
+       end
+      values << ["#{prefix}[#{output.compact.join("/")}]#{p.name}", p.id.to_s]
     end
     @all_projects_values = values
   end
