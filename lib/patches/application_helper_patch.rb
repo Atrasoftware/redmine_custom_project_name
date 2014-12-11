@@ -20,13 +20,13 @@ module  Patches
 
     def link_to_project_with_identifier(project, options={}, html_options = nil)
       if project.archived?
-        h(project.identifier)
+        h(project)
       elsif options.key?(:action)
         ActiveSupport::Deprecation.warn "#link_to_project with :action option is deprecated and will be removed in Redmine 3.0."
         url = {:controller => 'projects', :action => 'show', :id => project}.merge(options)
-        link_to project.identifier, url, html_options
+        link_to project, url, html_options
       else
-        link_to project.identifier, project_path(project, options), html_options
+        link_to project, project_path(project, options), html_options
       end
     end
 
@@ -35,9 +35,9 @@ module  Patches
       if project.active?
         link_to project.identifier, settings_project_path(project, options), html_options
       elsif project.archived?
-        h(project.name)
+        h(project)
       else
-        link_to project.identifier, project_path(project, options), html_options
+        link_to project, project_path(project, options), html_options
       end
     end
 
