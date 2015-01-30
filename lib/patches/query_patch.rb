@@ -20,25 +20,19 @@ end
 module InstanceMethods
   def all_projects_values_with_modif
     return @all_projects_values if @all_projects_values
-
     values = []
-    @settings = Setting.send "plugin_redmine_enhanced_projects_list"
-    if @settings[:sorting_projects_order] == 'true'
-      order_desc = true
-    else
-      order_desc = false
-    end
-    Project.project_tree_with_order(all_projects,order_desc) do |p, level|
+   #app_helper_get_sorted_cf = ApplicationHelper.get_sorted_cf(Setting.send "plugin_redmine_custom_project_name").map(&:name)
+    Project.project_tree(all_projects) do |p, level|
       prefix = (level > 0 ? ('--' * level + ' ') : '')
-      output = ["#{p.identifier}"]
-      ApplicationHelper.get_sorted_cf(Setting.send "plugin_redmine_custom_project_name").each do |cf|
-        p.visible_custom_field_values.select{|coll| coll.custom_field.name == cf.name }.each do |custom_value|
-           unless custom_value.value.blank?
-              output<< custom_value.value
-           end
-         end
-       end
-      values << ["#{prefix}#{p}", p.id.to_s]
+=begin
+    output = ["#{p.identifier}"]
+    app_helper_get_sorted_cf.each do |cf|
+      p.visible_custom_field_values.select{|coll| coll.custom_field.name == cf }.each do |custom_value|
+        output<< custom_value.value unless custom_value.value.blank?
+      end
+     end
+=end
+      values << ["#{prefix}#{p.to_s}", p.id.to_s]
     end
     @all_projects_values = values
   end
