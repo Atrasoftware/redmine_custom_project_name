@@ -29,10 +29,6 @@ module  Patches
         end
       end
       pr.update_attributes!(identifier_with_cfs: "[#{output.compact.join('/')}] #{pr.name}")
-=begin
-      pr.identifier_with_cfs = "[#{output.compact.join('/')}] #{pr.name}"
-      pr.save
-=end
     end
 
     def update_identifier_with_cfs
@@ -61,8 +57,9 @@ module  Patches
           end
         end
       end
-      update_attributes!(identifier_with_cfs: "[#{output.compact.join('/')}] #{project.name}")
-      "[#{output.compact.join('/')}] #{project.name}"
+      project.identifier_with_cfs= "[#{output.compact.join('/')}] #{name}"
+      project.save
+      "[#{output.compact.join('/')}] #{name}"
     end
   end
 
