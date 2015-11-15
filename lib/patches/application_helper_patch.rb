@@ -27,6 +27,7 @@ module  Patches
         end
         alias_method_chain :link_to_project, :identifier
         alias_method_chain :link_to_project_settings, :identifier
+        alias_method_chain :render_project_jump_box, :new_select
       end
     end
 
@@ -36,6 +37,21 @@ module  Patches
   end
 
   module InstanceMethods
+    def render_project_jump_box_with_new_select
+      return unless User.current.logged?
+      projects = User.current.projects.active.select(:id, :name, :identifier, :lft, :rgt, :identifier_with_cfs, :parent_id).to_a
+      if projects.any?
+        options =
+            ("<option value=''>#{ l(:label_jump_to_a_project) }</option>" +
+                '<option value="" disabled="disabled">---</option>').html_safe
+
+        options << project_tree_options_for_select(projects, :selected => @project) do |p|
+          { :value => project_path(:id => p, :jump => current_menu_item) }
+        end
+
+        select_tag('project_quick_jump_box', options, :onchange => 'if (this.value != \'\') { window.location = this.value; }')
+      end
+    end
 
     def link_to_project_with_identifier(project, options={}, html_options = nil)
       if project.archived?

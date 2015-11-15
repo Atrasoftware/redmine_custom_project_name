@@ -42,23 +42,23 @@ module  Patches
 
   module InstanceMethods
     def to_s_with_identifier_and_cf
-      return identifier_with_cfs unless identifier_with_cfs.nil? or identifier_with_cfs.empty?
-      settings = Setting.send "plugin_redmine_custom_project_name"
-      output = ["#{identifier}"]
-      if settings.present?
-        cfs= ApplicationHelper.get_sorted_cf(settings)
-        if cfs.present?
-          cfs.select{|col| settings[col.name] }.each do |cf|
-            visible_custom_field_values.select{|coll| coll.custom_field.name == cf.name }.each do |custom_value|
-              unless custom_value.value.blank?
-                output<< custom_value.value
+        return identifier_with_cfs unless identifier_with_cfs.nil? or identifier_with_cfs.empty?
+        settings = Setting.send "plugin_redmine_custom_project_name"
+        output = ["#{identifier}"]
+        if settings.present?
+          cfs= ApplicationHelper.get_sorted_cf(settings)
+          if cfs.present?
+            cfs.select{|col| settings[col.name] }.each do |cf|
+              visible_custom_field_values.select{|coll| coll.custom_field.name == cf.name }.each do |custom_value|
+                unless custom_value.value.blank?
+                  output<< custom_value.value
+                end
               end
             end
           end
         end
-      end
-      project.identifier_with_cfs= "[#{output.compact.join('/')}] #{name}"
-      project.save
+        project.identifier_with_cfs= "[#{output.compact.join('/')}] #{name}"
+        project.save
       "[#{output.compact.join('/')}] #{name}"
     end
   end
