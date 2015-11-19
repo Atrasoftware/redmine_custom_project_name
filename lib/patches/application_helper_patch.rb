@@ -27,7 +27,7 @@ module  Patches
         end
         alias_method_chain :link_to_project, :identifier
         alias_method_chain :link_to_project_settings, :identifier
-        alias_method_chain :render_project_jump_box, :new_select
+        alias_method_chain :render_project_jump_box, :new_select if Redmine::VERSION.to_s.start_with?("3.")
       end
     end
 
