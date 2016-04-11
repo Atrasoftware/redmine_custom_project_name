@@ -93,7 +93,7 @@
 </div>
 
 <% end %>
-<%= call_hook(:view_issues_index_bottom, { :issues => @issues, :project => @project, :query => @query }) %>
+<%= call_hook(:view_issues_index_bottom, { :issues_2 => @issues, :project => @project, :query => @query }) %>
 
 <% content_for :sidebar do %>
     <%= render :partial => 'issues/sidebar' %>

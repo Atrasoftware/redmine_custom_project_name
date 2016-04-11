@@ -38,6 +38,7 @@ module  Patches
 
   module InstanceMethods
     def render_project_jump_box_with_new_select
+      return render_project_jump_box_without_new_select if Redmine::VERSION::MAJOR < 3
       return unless User.current.logged?
       projects = User.current.projects.active.select(:id, :name, :identifier, :lft, :rgt, :identifier_with_cfs, :parent_id).to_a
       if projects.any?
