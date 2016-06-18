@@ -44,9 +44,9 @@ module  Patches
 
   module InstanceMethods
     def to_s_with_identifier_and_cf
-        return identifier_with_cfs unless identifier_with_cfs.presence
-        project.identifier_with_cfs= identifier
-        project.save
+        return identifier_with_cfs if identifier_with_cfs.presence
+        project.identifier_with_cfs = identifier
+        project.reload.save
         project.identifier_with_cfs
     end
 
