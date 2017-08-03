@@ -33,12 +33,6 @@ module  Patches
     end
 
     def set_new_identifier_with_cfs
-      background do
-        update_identifier_with_cfs
-      end
-    end
-
-    def update_identifier_with_cfs
       settings = Setting.send "plugin_redmine_custom_project_name"
       output = ["#{identifier}"]
       if settings.present?
@@ -54,13 +48,6 @@ module  Patches
         end
       end
       self.identifier_with_cfs= "[#{output.compact.join('/')}] #{name}"
-    end
-
-    def background(&block)
-      Thread.new do
-        yield
-        ActiveRecord::Base.connection.close
-      end
     end
   end
 
