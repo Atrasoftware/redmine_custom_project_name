@@ -13,7 +13,6 @@ end
 Rails.application.config.to_prepare do
   Query.send(:include, Patches::QueryPatch)
   Project.send(:include, Patches::ProjectPatchCf)
-  ProjectsController.send(:include, Patches::ProjectControllerPatchCf)
   ApplicationHelper.send(:include, Patches::ApplicationHelperPatch)
   Mailer.send(:include, Patches::MailerPatch)
   SettingsController.send(:include, Patches::SettingsControllerPatch)

@@ -8,7 +8,7 @@ module  Patches
       base.send(:include, InstanceMethods)
       base.class_eval do
         def self.get_sorted_cf(settings)
-          sorting_options = settings[:sortable_position].split('|')
+          sorting_options = settings.symbolize_keys[:sortable_position].split('|')
           cfs_sorted = Array.wrap(CustomField.where(type: "ProjectCustomField").where(id: sorting_options).order(sorting_options.map{|v| "id=#{v} ASC" }.join(', ')))
           cfs_sorted<< CustomField.where(type: "ProjectCustomField").where.not(id: sorting_options)
           cfs_sorted.flatten!
